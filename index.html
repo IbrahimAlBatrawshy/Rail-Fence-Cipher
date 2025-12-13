@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rail Fence Cipher - Text & Image Encryption</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1> Rail Fence Cipher</h1>
+            <p>Encrypt & Decrypt Text and Images using the Classic Zigzag Pattern</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('text')"> Text Cipher</button>
+            <button class="tab" onclick="switchTab('image')">Image Cipher</button>
+        </div>
+
+        <!-- TEXT CIPHER TAB -->
+        <div id="text-tab" class="tab-content active">
+            <div class="info-box">
+                <strong>ℹ How it works:</strong> The Rail Fence Cipher writes text in a zigzag pattern across multiple rails, 
+                then reads off each rail to create the cipher text. Use the same number of rails to decrypt!
+            </div>
+
+            <div class="control-group">
+                <label for="text-rails">Number of Rails (Depth):</label>
+                <input type="number" id="text-rails" value="3" min="2" max="10">
+            </div>
+
+            <div class="control-group">
+                <label for="plaintext">Plain Text:</label>
+                <textarea id="plaintext" placeholder="Enter your text here to encrypt..."></textarea>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-encrypt" onclick="encryptText()"> Encrypt Text</button>
+                <button class="btn btn-decrypt" onclick="decryptText()"> Decrypt Text</button>
+                <button class="btn btn-clear" onclick="clearText()"> Clear All</button>
+            </div>
+
+            <div id="text-result" class="result-box" style="display: none;">
+                <h3>Result:</h3>
+                <pre id="text-output"></pre>
+                <button class="btn btn-copy" onclick="copyToClipboard()" style="margin-top: 15px;"> Copy to Clipboard</button>
+            </div>
+
+            <div id="text-stats" class="stats" style="display: none;">
+                <div class="stat-item">
+                    <div class="label">Characters</div>
+                    <div class="value" id="char-count">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="label">Rails Used</div>
+                    <div class="value" id="rails-used">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="label">Processing Time</div>
+                    <div class="value" id="process-time">0ms</div>
+                </div>
+            </div>
+
+            <div id="visualization" class="visualization" style="display: none;">
+                <h4>📊 Zigzag Pattern Visualization:</h4>
+                <div id="rail-display" class="rail-display"></div>
+            </div>
+        </div>
+
+        <!-- IMAGE CIPHER TAB -->
+        <div id="image-tab" class="tab-content">
+            <div class="info-box">
+                <strong>ℹ️ How it works:</strong> The Rail Fence Cipher is applied to image pixel data using a zigzag pattern.
+                The encrypted image will appear scrambled. Use the same number of rails to decrypt!
+            </div>
+
+            <div class="control-group">
+                <label for="image-rails">Number of Rails (Depth):</label>
+                <input type="number" id="image-rails" value="3" min="2" max="20">
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-load" onclick="document.getElementById('imageInput').click()">Load Image</button>
+                <button class="btn btn-encrypt" onclick="encryptImage()"> Encrypt Image</button>
+                <button class="btn btn-decrypt" onclick="decryptImage()"> Decrypt Image</button>
+                <button class="btn btn-save" onclick="saveImage()"> Save Result</button>
+            </div>
+
+            <input type="file" id="imageInput" accept="image/*" onchange="loadImage(event)">
+
+            <div class="image-section">
+                <div class="image-container">
+                    <h3>Original Image</h3>
+                    <div class="image-preview" id="original-preview">
+                        <p>No image loaded<br>Click "Load Image" to begin</p>
+                    </div>
+                </div>
+
+                <div class="image-container">
+                    <h3>Processed Image</h3>
+                    <div class="image-preview" id="processed-preview">
+                        <p>No processing done<br>Encrypt or Decrypt an image</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="image-stats" class="stats" style="display: none;">
+                <div class="stat-item">
+                    <div class="label">Image Size</div>
+                    <div class="value" id="image-size">0x0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="label">Pixels Processed</div>
+                    <div class="value" id="pixel-count">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="label">Rails Used</div>
+                    <div class="value" id="image-rails-used">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
